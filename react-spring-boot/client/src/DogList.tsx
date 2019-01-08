@@ -11,7 +11,7 @@ interface DogListProps {
 }
 
 interface DogListState {
-    dogs: Dog[];
+    dogs: Array<Dog>;
     isLoading: boolean;
 }
 
@@ -33,6 +33,27 @@ class DogList extends React.Component<DogListProps, DogListState> {
             .then(data => this.setState({dogs: data, isLoading: false}));
     }
 
+    render() {
+        const {dogs, isLoading} = this.state;
+
+        if (isLoading) {
+            return <p>Loading...</p>;
+        }
+
+        return (
+            <div>
+                <h2>Dog List</h2>
+                {dogs.map((dog: Dog) =>
+                    <div key={dog.id}>
+                        {dog.name}<br/>
+                        <GiphyImage name={dog.name}/>
+                    </div>
+
+                )}
+            </div>
+        );
+    }
+
 }
 
-
+export default DogList;
